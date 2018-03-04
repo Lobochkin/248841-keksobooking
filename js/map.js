@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var START_PRICE = 1000;
+  var NUMBER_ITEMS = 5;
 
   var map = document.querySelector('.map');
   var mapFiltersContainer = map.querySelector('.map__filters-container');
@@ -10,47 +12,29 @@
   var isCardShown = false;
   var noticeForm = document.querySelector('.notice__form');
   var mapPinMain = document.querySelector('.map__pin--main');
-  var address = document.getElementById('address');
-  var housingPrice = document.getElementById('price');
-  var typeOfHousing = document.getElementById('housing-type');
-  var typeOfPrice = document.getElementById('housing-price');
-  var numberOfRooms = document.getElementById('housing-rooms');
-  var numberOfGuests = document.getElementById('housing-guests');
-  var features = document.getElementById('housing-features');
-  var arrFeatures = features.getElementsByTagName('input');
-  var START_PRICE = 1000;
+  var address = document.querySelector('input[name=address]');
+  var housingPrice = document.querySelector('input[name=price]');
+  var typeOfHousing = document.querySelector('select[name=housing-type]');
+  var typeOfPrice = document.querySelector('select[name=housing-price]');
+  var numberOfRooms = document.querySelector('select[name=housing-rooms]');
+  var numberOfGuests = document.querySelector('select[name=housing-guests]');
+  var features = document.querySelector('.map__filter-set');
+  var arrFeatures = features.querySelectorAll('input');
   var pinsData;
 
   function onMapPinsClick(evt) {
     window.util.eventPath(evt);
-    for (var i = 0; i < window.util.eventPath(evt).length; i++) {
-      if (window.util.eventPath(evt)[i].classList && window.util.eventPath(evt)[i].classList.contains('map__pin') && !window.util.eventPath(evt)[i].classList.contains('map__pin--main')) {
-        if (window.map.isCardShown) {
-          document.querySelector('.map__card ').remove();
-        }
+    window.util.eventPath(evt).forEach(function (el) {
+      if (el.classList && el.classList.contains('map__pin') && !el.classList.contains('map__pin--main')) {
+        window.card.forcedClose();
 
-        window.map.isCardShown = true;
-        var adCard = window.card.createCard(window.pin.filterPinsData(pinsData)[window.util.eventPath(evt)[i].dataset.index], mapCard.cloneNode('true'));
+        var adCard = window.card.createCard(window.pin.filterPinsData(pinsData)[el.dataset.index], mapCard.cloneNode('true'));
         mapFiltersContainer.insertBefore(adCard, mapFiltersContainer.firstChild);
-        document.addEventListener('keydown', function (evtClose) {
-          if (evtClose.keyCode === 27 && window.map.isCardShown) {
-            cardDelete();
-          }
-        });
-        document.querySelector('.popup__close').addEventListener('mousedown', cardDelete);
-        document.querySelector('.popup__close').addEventListener('keydown', function (evtClose) {
-          if (evtClose.keyCode === 13) {
-            cardDelete();
-          }
-        });
+        window.card.initCard();
       }
-    }
+    });
   }
 
-  function cardDelete() {
-    document.querySelector('.map__card ').remove();
-    window.map.isCardShown = false;
-  }
 
   function removeMapFaded() {
     map.classList.remove('map--faded');
@@ -101,9 +85,10 @@
     numberOfRooms.addEventListener('change', window.pin.filterUpdateHandler);
     numberOfGuests.addEventListener('change', window.pin.filterUpdateHandler);
 
-    for (var l = 0; l < arrFeatures.length; l++) {
-      arrFeatures[l].addEventListener('change', window.pin.filterUpdateHandler);
+    for (var i = 0; i < arrFeatures.length; i++) {
+      arrFeatures[i].addEventListener('change', window.pin.filterUpdateHandler);
     }
+
     var dragget;
 
     window.load(function (response) {
@@ -115,7 +100,7 @@
           removeDisable();
           document.querySelector('.map__filters').reset();
 
-          mapPins.appendChild(window.pin.createPins(window.pin.filterPinsData(pinsData).splice(0, 5)));
+          mapPins.appendChild(window.pin.createPins(window.pin.filterPinsData(pinsData).splice(0, NUMBER_ITEMS)));
           mapPins.addEventListener('click', onMapPinsClick);
 
           address.value = (evt.clientX) + ', ' + (evt.clientY);

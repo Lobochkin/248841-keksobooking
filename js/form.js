@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var NUMBER_SELECT = 4;
   var MIN_PRICE_HOUSING = {
     'flat': 1000,
     'bungalo': 0,
@@ -19,12 +20,12 @@
     2: 2,
     3: 3
   };
-  var selectionHousing = document.getElementById('type');
-  var housingPrice = document.getElementById('price');
-  var timein = document.getElementById('timein');
-  var timeout = document.getElementById('timeout');
-  var roomNumber = document.getElementById('room_number');
-  var capacity = document.getElementById('capacity');
+  var selectionHousing = document.querySelector('select[name=type]');
+  var housingPrice = document.querySelector('input[name=price]');
+  var timein = document.querySelector('select[name=timein]');
+  var timeout = document.querySelector('select[name=timeout]');
+  var roomNumber = document.querySelector('select[name=rooms]');
+  var capacity = document.querySelector('select[name=capacity]');
 
   function onSelectionHousingChange(evt) {
     housingPrice.min = MIN_PRICE_HOUSING[evt.target.value];
@@ -39,14 +40,14 @@
   }
 
   function onRoomNumberChange(evt) {
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < NUMBER_SELECT; i++) {
       if (capacity.children[i].hasAttribute('disabled')) {
         capacity.children[i].removeAttribute('disabled');
       }
     }
     capacity.value = ROOMS[evt.target.value];
 
-    for (var j = 0; j < 4; j++) {
+    for (var j = 0; j < NUMBER_SELECT; j++) {
       if (ROOMS_AND_PEOPLE[ROOMS[evt.target.value]][j] === 0) {
         capacity.children[j].setAttribute('disabled', 'disabled');
       }

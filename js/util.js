@@ -26,12 +26,7 @@
     function getParents(node, memo) {
       memo = memo || [];
       var parentNode = node.parentNode;
-
-      if (!parentNode) {
-        return memo;
-      } else {
-        return getParents(parentNode, memo.concat(parentNode));
-      }
+      return !parentNode ? memo : getParents(parentNode, memo.concat(parentNode));
     }
 
     return [target].concat(getParents(target), window);
