@@ -2,8 +2,9 @@
 
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-  var WIDTH_PHOTO = 70;
-  var HEIGHT_PHOTO = 50;
+  var WIDTH_PHOTO = 100;
+  var HEIGHT_PHOTO = 70;
+  var MARGIN = 10;
 
   function loadAvatar() {
 
@@ -36,7 +37,11 @@
 
     fileChooser.addEventListener('change', function () {
       var img = document.createElement('img');
-      img.className = 'Фотография';
+      img.className = 'foto';
+      img.draggable = true;
+      img.style.cursor = 'move';
+      img.style.marginRight = MARGIN + 'px';
+      img.style.marginBottom = MARGIN + 'px';
       img.style.width = WIDTH_PHOTO + 'px';
       img.style.height = HEIGHT_PHOTO + 'px';
       preview.appendChild(img);
