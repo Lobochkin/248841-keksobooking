@@ -3,6 +3,7 @@
 (function () {
   var START_PRICE = 1000;
   var NUMBER_ITEMS = 5;
+  var CODE_INTER = 13;
 
   var map = document.querySelector('.map');
   var mapFiltersContainer = map.querySelector('.map__filters-container');
@@ -56,6 +57,7 @@
   function download(evt) {
     window.upload(new FormData(noticeForm), function () {
       noticeForm.reset();
+      window.loadFotos.resetFotos();
     },
     errorBlock);
     evt.preventDefault();
@@ -89,6 +91,11 @@
       arrFeatures[i].addEventListener('change', window.pin.filterUpdateHandler);
     }
 
+    function resetKeydown(evt) {
+      if (evt.keyCode === CODE_INTER) {
+        window.loadFotos.resetFotos();
+      }
+    }
     var dragget;
 
     window.load(function (response) {
@@ -99,6 +106,8 @@
           removeNoticeFormDisabled();
           removeDisable();
           document.querySelector('.map__filters').reset();
+          document.querySelector('.form__reset').addEventListener('mouseup', window.loadFotos.resetFotos);
+          document.querySelector('.form__reset').addEventListener('keydown', resetKeydown);
 
           mapPins.appendChild(window.pin.createPins(window.pin.filterPinsData(pinsData).splice(0, NUMBER_ITEMS)));
           mapPins.addEventListener('click', onMapPinsClick);

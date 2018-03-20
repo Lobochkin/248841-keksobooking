@@ -30,16 +30,19 @@
     function _onDragOver(evt) {
       evt.preventDefault();
       evt.dataTransfer.dropEffect = 'move';
-      target = evt.target;
-      if (target && target !== foto && target.nodeName.toLowerCase() === 'img') {
+      if (evt.target !== foto && evt.target.nodeName.toLowerCase() === 'img') {
+        target = evt.target;
         target.classList.add('focus');
       }
+
       rect = target.getBoundingClientRect();
       next = (evt.clientX - rect.left) / (rect.right - rect.left) < 0.5;
     }
     function _onDragLeave(evt) {
       evt.preventDefault();
-      evt.target.classList.contains('focus') ? evt.target.classList.remove('focus') : true;
+      if (evt.target.classList.contains('focus')) {
+        evt.target.classList.remove('focus');
+      }
     }
 
     function _onDragEnd(evt) {
@@ -50,7 +53,9 @@
         container.insertBefore(foto, next && target || target.nextSibling);
       }
       foto.classList.remove('ghost');
-      target.classList.contains('focus') ? target.classList.remove('focus') : true;
+      if (target.classList.contains('focus')) {
+        target.classList.remove('focus');
+      }
       container.removeEventListener('dragover', _onDragOver, false);
       container.removeEventListener('dragend', _onDragEnd, false);
     }
