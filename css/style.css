@@ -703,7 +703,6 @@ textarea:focus
 .notice__form .upload
 {
     display: flex;
-
     min-height: 70px;
 }
 
@@ -716,13 +715,10 @@ textarea:focus
 .notice__form .drop-zone
 {
     font-size: 14px;
-
     box-sizing: border-box;
     height: 70px;
     padding: 10px 10px 5px;
-
     text-align: center;
-
     color: #999;
     border: dashed 1px #c7c7c7;
     border-radius: 5px;
@@ -735,7 +731,39 @@ textarea:focus
 
 .form__photo-container
 {
-    width: 140px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.form__photo-container img {
+  cursor: move;
+}
+
+.ghost {
+  opacity: 0.4;
+}
+
+.focus {
+  outline: 1px solid red;
+  animation-name: stretching;
+  animation-duration: .2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes stretching {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+.upload-fotos {
+  width: 130px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 .form__element--submit

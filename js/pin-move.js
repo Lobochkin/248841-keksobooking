@@ -1,10 +1,11 @@
 'use strict';
+
 (function () {
   function movePin() {
     var MIN_PIN_Y = 150;
     var MAX_PIN_Y = 500;
     var mapPinMain = document.querySelector('.map__pin--main');
-    var address = document.getElementById('address');
+    var address = document.querySelector('input[name=address]');
     var map = document.querySelector('.map');
 
     mapPinMain.addEventListener('mousedown', function (evt) {
@@ -21,6 +22,7 @@
 
       function onMapTokyoMousemove(moveEvt) {
         moveEvt.preventDefault();
+
         var shift = {
           x: startCoords.x - moveEvt.pageX,
           y: startCoords.y - moveEvt.pageY
@@ -57,6 +59,7 @@
       document.addEventListener('mouseup', onMapTokyoMouseup);
     });
   }
+
   window.pinMove = {
     movePin: movePin
   };

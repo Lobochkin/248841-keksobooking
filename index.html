@@ -122,7 +122,7 @@
 
       <fieldset class="form__element" disabled>
         <label for="price">Цена за ночь, руб.</label>
-        <input id="price" name="price" type="number" placeholder="5000" max="1000000" required>
+        <input id="price" name="price" type="number" placeholder="1000" max="1000000" required>
       </fieldset>
 
       <fieldset class="form__element" disabled>
@@ -152,10 +152,10 @@
       <fieldset class="form__element" disabled>
         <label for="capacity">Количество мест</label>
         <select id="capacity" name="capacity" >
-          <option value="3">для 3 гостей</option>
-          <option value="2">для 2 гостей</option>
+          <option value="3" disabled>для 3 гостей</option>
+          <option value="2" disabled>для 2 гостей</option>
           <option value="1" selected>для 1 гостя</option>
-          <option value="0">не для гостей</option>
+          <option value="0" disabled>не для гостей</option>
         </select>
       </fieldset>
 
@@ -189,7 +189,7 @@
       <fieldset class="form__element form__element--wide" disabled>
         <label>Фотографии жилья</label>
         <div class="form__photo-container">
-          <div class="upload">
+          <div class="upload upload-fotos">
             <input type="file" id="images">
             <label for="images" class="drop-zone">Загрузите или&nbsp;перетащите сюда фото</label>
           </div>
@@ -244,12 +244,14 @@
 
   <button style="left: 200px; top: 400px;" class="map__pin map_pin_avatar"><img src="img/avatars/user07.png" width="40" height="40" draggable="false"></button>
 </template>
+<script src="js/drag-n-drop.js"></script>
 <script src="js/backend.js"></script>
-<script src="js/data.js"></script>
+<script src="js/util.js"></script>
 <script src="js/pin.js"></script>
 <script src="js/card.js"></script>
 <script src="js/map.js"></script>
 <script src="js/pin-move.js"></script>
 <script src="js/form.js"></script>
+<script src="js/load-fotos.js"></script>
 </body>
 </html>
